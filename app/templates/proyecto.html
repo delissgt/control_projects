@@ -1,0 +1,881 @@
+<html><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="{{ url_for('static', filename='jquery.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
+    <link href="{{ url_for('static', filename='font-awesome-4.7.0/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ url_for('static', filename='bootstrap.css') }}" rel="stylesheet" type="text/css">
+  </head><body>
+    <div class="navbar navbar-default navbar-static-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-ex-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="{{ url_for('index') }}"><span>Facultad de Ingeniería Química</span></a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbar-ex-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="{{ url_for('index') }}"><i class="fa fa-fw fa-home fa-lg"></i>Inicio</a>
+            </li>
+            <li>
+              <a href="{{ url_for('logouta') }}">Cerrar sesion</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="section section-info">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <h1>Proyecto</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <p class="text-danger">
+              <strong>Todos los datos son obligatorios
+                <br>Los archivos que se piden, deben de ser solo imagenes de con extension .png,
+                  en caso de que no lo sean, el probable que no se guarde el proyecto.
+                <br>
+                <br>Al terminar da click en el boton Guardar.</strong>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="jumbotron">
+              <form class="form-horizontal text-center" role="form" action="{{ url_for('validarFormularioAlumno') }}" method="post" enctype="multipart/form-data">
+                <!--CARRERA-->
+                <div class="form-group">
+                  <div class="col-sm-2 text-center">
+                    <label for="carrera" class="control-label">Area de desarrollo del proyecto :</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <select name="carrera" id="carrera" onchange="func_aread('carrera');" class="form-control" required="">
+                      <option value="ingenieria quimica">Ingenieria Química</option>
+                      <option value="ingenieria en materiales">Ingeniería en Materiales</option>
+                      <option value="ingenieria en alimentos">Ingeniería en Alimentos</option>
+                      <option value="ingenieria ambiental">Ingeniería Ambiental</option>
+                      <option value="ingenieria en general">Ingeniería en General</option>
+                      <option value="otro">Otro</option>
+                    </select>
+                </div>
+                </div>
+                <!--oculto-->
+                <div class="form-group" id="areadesarrollo" name="areadesarrollo" hidden >
+                  <div class="col-sm-2">
+                    <label for="areadesarrollo" class="control-label">Indique el area:</label>
+                  </div>
+
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="areadesarrollo" hidden="" name="areadesarrollo" maxlength="40">
+                  </div>
+                </div>
+                <!--PERIODO DEL CURSO-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="periodo" class="control-label">Período del curso:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="periodo" placeholder="Verano 2017" name="periodo" required="" maxlength="20">
+                  </div>
+                </div>
+                <!--texto integrandes del equipo-->
+                <p>
+                  <strong>. . . Integrantes del equipo . . .</strong>
+                </p>
+                <!--LIDER-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="integranteLider" class="control-label">Líder:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="integranteLider" placeholder="Juan Perez Lopez" name="integranteLider" required="" maxlength="50">
+                  </div>
+                </div>
+                <!--Carrera Lider-->
+              <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="carreraintegranteLider" class="control-label">Carrera del líder:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="carreraintegranteLider" placeholder="Ing. Química" name="carreraintegranteLider" required="" maxlength="50">
+                  </div>
+                </div>
+              <br>
+                <!--SECRETARIO-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="integranteSecretario" class="control-label">Secretario:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="integranteSecretario" placeholder="Ana Solis Dolores" name="integranteSecretario" required="" maxlength="50">
+                  </div>
+                </div>
+                <!--Carrera de SECRETARIO-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="carreraintegranteSecretario" class="control-label">Carrera del Secretario:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="carreraintegranteSecretario" placeholder="Ing. en Alimentos" name="carreraintegranteSecretario" required="" maxlength="50">
+                  </div>
+                </div>
+              <br>
+                <!--INVESTIGADOR-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="integranteInvestigador" class="control-label">Investigador:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="integranteInvestigador" placeholder="Pedro Lara Lopez" name="integranteInvestigador" required="" maxlength="50">
+                  </div>
+                </div>
+                <!--carrera de INVESTIGADOR-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="carreraintegranteInvestigador" class="control-label">Carrera del Investigador:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="carreraintegranteInvestigador" placeholder="Ing. Química" name="carreraintegranteInvestigador" required="" maxlength="50">
+                  </div>
+                </div>
+              <br>
+                <!--SECRETARIO DEL DIABLO-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="integranteAbobadoDiablo" class="control-label">Secretario del diablo:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="integranteAbogadoDiablo" placeholder="Ruth Morales Robles" name="integranteAbogadoDiablo" required="" maxlength="50">
+                  </div>
+                </div>
+                <hr>
+                <!--carrea de SECRETARIO DEL DIABLO-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="carreraintegranteAbobadoDiablo" class="control-label"> Carrera del Secretario del diablo:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="carreraintegranteAbobadoDiablo" placeholder="Ing. Química" name="carreraintegranteAbobadoDiablo" required="" maxlength="50">
+                  </div>
+                </div>
+                <hr>
+                <!--. . . . . Desarrollo del proyecto. . . .-->
+                <p style="color = red" class="text-primary">
+                  <strong>. . . . Desarrollo del proyecto . . . .</strong>
+                </p>
+                <!--NOMBRE DEL PROYECTO-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="nombreProyecto" class="control-label">Nombre del proyecto:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="nombreProyecto" placeholder="Salsa picante" name="nombreProyecto" required="" maxlength="40">
+                  </div>
+                </div>
+                <!--DESCRIPCION DEL PROYECTO -->
+                <div class="form-group">
+                  <div class="col-md-2 col-sm-2 text-left">
+                    <label for="descripcionProyecto" class="control-label">Descripción del proyecto:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <textarea name="descripcionProyecto" id="descripcionProyecto" class="form-control" placeholder="El proyecto trata de..." required=""></textarea>
+                  </div>
+                </div>
+                <!--SLOGAN -->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="slogan" class="control-label">Slogan:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <input type="text" name="slogan" id="slogan" class="form-control" placeholder="pica pi" required="" maxlength="30">
+                  </div>
+                </div>
+                <!--LOGOTIPO-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="logotipo" class="control-label">Logotipo .png:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <input type="file" name="logotipo" id="logotipo" required="">{% with mensajesDeError = get_flashed_messages(category_filter=["CategoriaError"])
+                    %} {% if mensajesDeError %} {% for mensaje in mensajesDeError %}
+                    <div class="alert alert-danger alert-dismissable">{{ mensaje }}</div>{% endfor %} {% endif %} {% endwith %}</div>
+                </div>
+                <!--MISION DE LA EMPRESA-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="misionEmpresa" class="control-label">Misión de la empresa:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <textarea class="form-control" id="misionEmpresa" placeholder="Nuestra misión es..." name="misionEmpresa" maxlength="300" required=""></textarea>
+                  </div>
+                </div>
+                <!--VISION DE LA EMPRESA-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="visionEmpresa" class="control-label">Visión de la empresa:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <textarea class="form-control" id="visionEmpresa" placeholder="Nuestra vision es..." name="visionEmpresa" maxlength="300" required=""></textarea>
+                  </div>
+                </div>
+                <!--PRIMER OBJETIVO ESTRATEGICO DE LA EMPRESA-->
+                <hr>
+                <div class="form-group">
+                  <div class="col-sm-2 text-left">
+                    <label for="unoObjetivoEstrategico" class="control-label">Primer Objetivo Estratégico:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <textarea class="form-control" id="unoObjetivoEstrategico" placeholder="objetivo estrategico 1..." name="unoObjetivoEstrategico" maxlength="1000" required=""></textarea>
+                  </div>
+                </div>
+                <!--PRIMER OBJETIVO TACTICO.... FALTA PONER COMO COMENTARIO-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="unoObjetivoTactico" class="control-label">Primer Objetivo Táctico:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <textarea class="form-control" id="unoObjetivoTactico" placeholder="objetivo tactico 1..." name="unoObjetivoTactico" maxlength="1000" required=""></textarea>
+                  </div>
+                </div>
+                <!--OBJETIVO OPERATIVO 1 PARTE 1-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="unounoObjetivoOPerativo" class="control-label">Objetivo Operativo 1:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <textarea class="form-control" id="unounoObjetivoOPerativo" placeholder="objetivo operativo 1" name="unounoObjetivoOPerativo" maxlength="1000" required=""></textarea>
+                  </div>
+                </div>
+                <!--OBJETIVO OPERATIVO 2 PARTE 1... FALTA PONER COMO COMENTARIO-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="unodosObjetivoOPerativo" class="control-label">Objetivo Operativo 2:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <textarea class="form-control" id="unodosObjetivoOPerativo" placeholder="objetivo operativo 2" name="unodosObjetivoOPerativo" maxlength="1000" required=""></textarea>
+                  </div>
+                </div>
+                <!--PARTE 2.....OBJETIVO ESTRATEGICO 2-->
+                <hr>
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="dosObjetivoEstrategico" class="control-label">Segundo Objetivo Estratégico:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <textarea class="form-control" id="dosObjetivoEstrategico" placeholder="2do Objetivo Estrategico" name="dosObjetivoEstrategico" maxlength="1000" required=""></textarea>
+                  </div>
+                </div>
+                <!--PARTE2....2do OBJETIVO TACTICO -->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="dosObjetivoTactico" class="control-label">Segundo Objetivo Táctico:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <textarea class="form-control" id="dosObjetivoTactico" placeholder="objetivo tactico 2..." name="dosObjetivoTactico" maxlength="1000" required=""></textarea>
+                  </div>
+                </div>
+                <!--PARTE 2 OBJETIVO OPERATIVO 1-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="dosunoObjetivoOPerativo" class="control-label">Objetivo Operativo 1:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <textarea class="form-control" id="dosunoObjetivoOPerativo" placeholder="objetivo operativo 1" name="dosunoObjetivoOPerativo" maxlength="1000" required=""></textarea>
+                  </div>
+                </div>
+                <!--PARTE 2 .... OBJETIVO OPERATIVO 2-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="dosdosObjetivoOPerativo" class="control-label">Objetivo Operativo 2:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <textarea class="form-control" id="dosdosObjetivoOPerativo" placeholder="objetivo operativo 2" name="dosdosObjetivoOPerativo" maxlength="1000" required=""></textarea>
+                  </div>
+                </div>
+                <!--texto SEGMENTACION DEL MERCADO geograficamente-->
+                <p>
+                  <strong>. . . Segmentación del mercado . . .</strong>
+                </p>
+                <p class="text-left">Geográficamente:</p>
+                <!--Segmentacion del mercado por -->
+                <!---Pais-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="pais" class="control-label">País:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="pais" placeholder="México" name="pais" maxlength="50" required="">
+                  </div>
+                </div>
+                <!--Segmentacion de mercado por region -->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="region" class="control-label">Region:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="region" placeholder="centro" name="region" maxlength="50" required="">
+                  </div>
+                </div>
+                <!--segmentacion de mercado por ciudad -->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="ciudad" class="control-label">Ciudad:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="ciudad" placeholder="Puebla" name="ciudad" maxlength="50" required="">
+                  </div>
+                </div>
+                <!--segmentacion mercado Colonia o Zona-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="coloniazona" class="control-label">Colonia o zona:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="coloniazona" placeholder="Bugambilias" name="coloniazona" maxlength="100" required="">
+                  </div>
+                </div>
+                <p class="text-left">Características generales:</p>
+                <!--segmentacion del mercado CARACTERISTICAS Grales-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="niveldeeducacion" class="control-label">Nivel de educación:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="niveldeeducacion" placeholder="secundaria" name="niveldeeducacion" maxlength="100" required="">
+                  </div>
+                </div>
+                <!--edad -->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="edad" class="control-label">Edad:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="edad" placeholder="mayores de 12 años" name="edad" maxlength="50" required="">
+                  </div>
+                </div>
+                <!--sexo-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="sexo" class="control-label">Sexo:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="sexo" placeholder="Masculino y Femenino" name="sexo" maxlength="30" required="">
+                  </div>
+                </div>
+                <!--profesion-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="profesion" class="control-label">Profesión:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="profecion" placeholder="Indistinto" name="profesion" maxlength="100" required="">
+                  </div>
+                </div>
+                <!--CARACTERISTICAS ESPECIFICAS-->
+                <p class="text-left">Características específicas:</p>
+                <!--estilo de vida-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="estilodevida" class="control-label">Estilo de vida:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="estilodevida" placeholder="..." name="estilodevida" maxlength="100" required="">
+                  </div>
+                </div>
+                <!--gustos-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="gustos" class="control-label">Gustos:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="gustos" placeholder="..." name="gustos" maxlength="100" required="">
+                  </div>
+                </div>
+                <!--costumbres-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="costumbres" class="control-label">Costumbres:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="costumbres" placeholder="..." name="costumbres" maxlength="200" required="">
+                  </div>
+                </div>
+                <!--habitos de compra-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="habitosdecompra" class="control-label">Habitos de compra:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="habitosdecompra" placeholder="..." name="habitosdecompra" maxlength="200" required="">
+                  </div>
+                </div>
+                <p>
+                  <strong>. . . Competencia 3 empresas . . .</strong>
+                </p>
+                <!--nombre de las 3 empresas-->
+                <!--empresa 1-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="nombreempresa1" class="control-label">Nombre de empresa 1:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="nombreempresauno" placeholder="" name="nombreempresauno" maxlength="50" required="">
+                  </div>
+                </div>
+                <!--empresa 2-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="nombreempresa2" class="control-label">Nombre de empresa 2:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="nombreempresados" placeholder="" name="nombreempresados" maxlength="50" required="">
+                  </div>
+                </div>
+                <!--empresa 3-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="nombreempresa3" class="control-label">Nombre de empresa 3:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="nombreempresatres" placeholder="" name="nombreempresatres" maxlength="50" required="">
+                  </div>
+                </div>
+                <!--slogan de empresa 1-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="sloganempresa1" class="control-label">Slogan de empresa 1:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="sloganempresauno" placeholder="" name="sloganempresauno" maxlength="50" required="">
+                  </div>
+                </div>
+                <!--Slogna empresa 2-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="sloganempresa2" class="control-label">Slogan de empresa 2:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="sloganempresados" placeholder="" name="sloganempresados" maxlength="50" required="">
+                  </div>
+                </div>
+                <!--slogan empresa 3-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="sloganempresa3" class="control-label">Slogan de empresa 3:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="sloganempresatres" placeholder="" name="sloganempresatres" maxlength="50" required="">
+                  </div>
+                </div>
+                <!--logotipo de las empresas-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="logotipoempresas" class="control-label">Logotipo de las 3 empresas .png:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <input type="file" name="logotipoempresas" id="logotipoempresas" required="">{% with mensajesDeError = get_flashed_messages(category_filter=["CategoriaError"])
+                    %} {% if mensajesDeError %} {% for mensaje in mensajesDeError %}
+                    <div class="alert alert-danger alert-dismissable">{{ mensaje }}</div>{% endfor %} {% endif %} {% endwith %}</div>
+                </div>
+                <!--estrategias de publicidad-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="estrategiasdepublicidad" class="control-label">Estrategias de publicidad:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <textarea class="form-control" id="estrategiasdepublicidad" placeholder="..." name="estrategiasdepublicidad" maxlength="1000" required=""></textarea>
+                  </div>
+                </div>
+                <!--tabla de contizaciones de materia prima-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="tabladecotizaciones" class="control-label">Tabla de cotizaciones de materia prima .png:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <input type="file" name="tabladecotizaciones" id="tabladecotizaciones" required="">{% with mensajesDeError = get_flashed_messages(category_filter=["CategoriaError"])
+                    %} {% if mensajesDeError %} {% for mensaje in mensajesDeError %}
+                    <div class="alert alert-danger alert-dismissable">{{ mensaje }}</div>{% endfor %} {% endif %} {% endwith %}</div>
+                </div>
+                <p>
+                  <strong>. . . Encuesta . . .</strong>
+                </p>
+                <!--pregunta 1-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="pregunta1" class="control-label">Pregunta 1:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <textarea class="form-control" id="pregunta1" placeholder="..." name="pregunta1" maxlength="200" required=""></textarea>
+                  </div>
+                </div>
+                <!--grafica de pregunta1-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="pregunta1grafica" class="control-label">Gráfica de pregunta 1 .png:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <input type="file" name="pregunta1grafica" id="pregunta1grafica" required="">{% with mensajesDeError = get_flashed_messages(category_filter=["CategoriaError"])
+                    %} {% if mensajesDeError %} {% for mensaje in mensajesDeError %}
+                    <div class="alert alert-danger alert-dismissable">{{ mensaje }}</div>{% endfor %} {% endif %} {% endwith %}</div>
+                </div>
+                <!--pregunta2-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="pregunta2" class="control-label">Pregunta 2:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <textarea class="form-control" id="pregunta2" placeholder="..." name="pregunta2" maxlength="200" required=""></textarea>
+                  </div>
+                </div>
+                <!--grafica de la pregunta2-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="pregunta2grafica" class="control-label">Gráfica de pregunta 2 .png:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <input type="file" name="pregunta2grafica" id="pregunta2grafica" required="">{% with mensajesDeError = get_flashed_messages(category_filter=["CategoriaError"])
+                    %} {% if mensajesDeError %} {% for mensaje in mensajesDeError %}
+                    <div class="alert alert-danger alert-dismissable">{{ mensaje }}</div>{% endfor %} {% endif %} {% endwith %}</div>
+                </div>
+                <!--pregunta3-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="pregunta3" class="control-label">Pregunta 3:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <textarea class="form-control" id="pregunta3" placeholder="..." name="pregunta3" maxlength="200" required=""></textarea>
+                  </div>
+                </div>
+                <!--grafica de la pregunta 3-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="pregunta3grafica" class="control-label">Gráfica de pregunta 3 .png:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <input type="file" name="pregunta3grafica" id="pregunta3grafica" required="">{% with mensajesDeError = get_flashed_messages(category_filter=["CategoriaError"])
+                    %} {% if mensajesDeError %} {% for mensaje in mensajesDeError %}
+                    <div class="alert alert-danger alert-dismissable">{{ mensaje }}</div>{% endfor %} {% endif %} {% endwith %}</div>
+                </div>
+                <!--pregunta4-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="pregunta4" class="control-label">Pregunta 4:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <textarea class="form-control" id="pregunta4" placeholder="..." name="pregunta4" maxlength="200" required=""></textarea>
+                  </div>
+                </div>
+                <!--grafica de pregunta 4-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="pregunta4grafica" class="control-label">Gráfica de pregunta 4 .png:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <input type="file" name="pregunta4grafica" id="pregunta4grafica" required="">{% with mensajesDeError = get_flashed_messages(category_filter=["CategoriaError"])
+                    %} {% if mensajesDeError %} {% for mensaje in mensajesDeError %}
+                    <div class="alert alert-danger alert-dismissable">{{ mensaje }}</div>{% endfor %} {% endif %} {% endwith %}</div>
+                </div>
+                <!--pregunta 5-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="pregunta5" class="control-label">Pregunta 5:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <textarea class="form-control" id="pregunta5" placeholder="..." name="pregunta5" maxlength="200" required=""></textarea>
+                  </div>
+                </div>
+                <!--grafica de pregunta 5-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="pregunta5grafica" class="control-label">Gráfica de pregunta 5 .png:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <input type="file" name="pregunta5grafica" id="pregunta5grafica" required="">{% with mensajesDeError = get_flashed_messages(category_filter=["CategoriaError"])
+                    %} {% if mensajesDeError %} {% for mensaje in mensajesDeError %}
+                    <div class="alert alert-danger alert-dismissable">{{ mensaje }}</div>{% endfor %} {% endif %} {% endwith %}</div>
+                </div>
+                <!--pregunta 6-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="pregunta6" class="control-label">Pregunta 6:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <textarea class="form-control" id="pregunta6" placeholder="..." name="pregunta6" maxlength="200" required=""></textarea>
+                  </div>
+                </div>
+                <!--grafica de pregunta 6-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="pregunta6grafica" class="control-label">Gráfica de pregunta 6 .png:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <input type="file" name="pregunta6grafica" id="pregunta6grafica" required="">{% with mensajesDeError = get_flashed_messages(category_filter=["CategoriaError"])
+                    %} {% if mensajesDeError %} {% for mensaje in mensajesDeError %}
+                    <div class="alert alert-danger alert-dismissable">{{ mensaje }}</div>{% endfor %} {% endif %} {% endwith %}</div>
+                </div>
+                <!--pregunta 7-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="pregunta7" class="control-label">Pregunta 7:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <textarea class="form-control" id="pregunta7" placeholder="..." name="pregunta7" maxlength="200" required=""></textarea>
+                  </div>
+                </div>
+                <!--grafica preugnta 7-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="pregunta7grafica" class="control-label">Gráfica de pregunta 7 .png:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <input type="file" name="pregunta7grafica" id="pregunta7grafica" required="">{% with mensajesDeError = get_flashed_messages(category_filter=["CategoriaError"])
+                    %} {% if mensajesDeError %} {% for mensaje in mensajesDeError %}
+                    <div class="alert alert-danger alert-dismissable">{{ mensaje }}</div>{% endfor %} {% endif %} {% endwith %}</div>
+                </div>
+                <!--pregunta 8-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="pregunta8" class="control-label">Pregunta 8:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <textarea class="form-control" id="pregunta8" placeholder="..." name="pregunta8" maxlength="200" required=""></textarea>
+                  </div>
+                </div>
+                <!--grafica pregunta 8-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="pregunta8grafica" class="control-label">Grafica de pregunta 8 .png:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <input type="file" name="pregunta8grafica" id="pregunta8grafica" required="">{% with mensajesDeError = get_flashed_messages(category_filter=["CategoriaError"])
+                    %} {% if mensajesDeError %} {% for mensaje in mensajesDeError %}
+                    <div class="alert alert-danger alert-dismissable">{{ mensaje }}</div>{% endfor %} {% endif %} {% endwith %}</div>
+                </div>
+                <!--pregunta 9-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="pregunta9" class="control-label">Pregunta 9:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <textarea class="form-control" id="pregunta9" placeholder="..." name="pregunta9" maxlength="200" required=""></textarea>
+                  </div>
+                </div>
+                <!--grafica pregunta 9-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="pregunta9grafica" class="control-label">Gráfica de pregunta 9 .png:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <input type="file" name="pregunta9grafica" id="pregunta9grafica" required="">{% with mensajesDeError = get_flashed_messages(category_filter=["CategoriaError"])
+                    %} {% if mensajesDeError %} {% for mensaje in mensajesDeError %}
+                    <div class="alert alert-danger alert-dismissable">{{ mensaje }}</div>{% endfor %} {% endif %} {% endwith %}</div>
+                </div>
+                <!--pregunta 10-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="pregunta10" class="control-label">Pregunta 10:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <textarea class="form-control" id="pregunta10" placeholder="..." name="pregunta10" maxlength="200" required=""></textarea>
+                  </div>
+                </div>
+                <!--grafica pregunta 1o-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="pregunta10grafica" class="control-label">Gráfica de pregunta 10 .png:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <input type="file" name="pregunta10grafica" id="pregunta10grafica" required="">{% with mensajesDeError = get_flashed_messages(category_filter=["CategoriaError"])
+                    %} {% if mensajesDeError %} {% for mensaje in mensajesDeError %}
+                    <div class="alert alert-danger alert-dismissable">{{ mensaje }}</div>{% endfor %} {% endif %} {% endwith %}</div>
+                </div>
+                <p>
+                  <strong>. . . FODA . . .</strong>
+                </p>
+                <!--Fortalezas-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="fortalezas" class="control-label">Fortalezas:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <textarea class="form-control" id="fortalezas" placeholder="..." name="fortalezas" maxlength="500" required=""></textarea>
+                  </div>
+                </div>
+                <!--Oportunidades-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="oportunidades" class="control-label">Oportunidades:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <textarea class="form-control" id="oportunidades" placeholder="..." name="oportunidades" maxlength="500" required=""></textarea>
+                  </div>
+                </div>
+                <!--Debilidades-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="debilidades" class="control-label">Debilidades:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <textarea class="form-control" id="debilidades" placeholder="..." name="debilidades" maxlength="500" required=""></textarea>
+                  </div>
+                </div>
+                <!--Amenazas-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="amenazas" class="control-label">Amenazas:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <textarea class="form-control" id="amenazas" placeholder="..." name="amenazas" maxlength="500" required=""></textarea>
+                  </div>
+                </div>
+                <p>
+                  <strong>. . . Diagrama de producción . . .</strong>
+                </p>
+                <!--diagrama de flujo-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="diagramadeflujo" class="control-label">Diagrama de flujo .png:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <input type="file" name="diagramadeflujo" id="diagramadeflujo" required="">{% with mensajesDeError = get_flashed_messages(category_filter=["CategoriaError"])
+                    %} {% if mensajesDeError %} {% for mensaje in mensajesDeError %}
+                    <div class="alert alert-danger alert-dismissable">{{ mensaje }}</div>{% endfor %} {% endif %} {% endwith %}</div>
+                </div>
+                <!--Inicio-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="inicio" class="control-label">Inicio:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <textarea class="form-control" id="inicio" placeholder="describa como inicio el proyecto" name="inicio" maxlength="1000" required=""></textarea>
+                  </div>
+                </div>
+                <!--iniciofoto1-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="iniciofoto1" class="control-label">Foto 1 .png:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <input type="file" name="iniciofoto1" id="iniciofoto1" required="">{% with mensajesDeError = get_flashed_messages(category_filter=["CategoriaError"])
+                    %} {% if mensajesDeError %} {% for mensaje in mensajesDeError %}
+                    <div class="alert alert-danger alert-dismissable">{{ mensaje }}</div>{% endfor %} {% endif %} {% endwith %}</div>
+                </div>
+                <!--inicio foto 2-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="iniciofoto2" class="control-label">Foto 2 .png:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <input type="file" name="iniciofoto2" id="iniciofoto2" required="">{% with mensajesDeError = get_flashed_messages(category_filter=["CategoriaError"])
+                    %} {% if mensajesDeError %} {% for mensaje in mensajesDeError %}
+                    <div class="alert alert-danger alert-dismissable">{{ mensaje }}</div>{% endfor %} {% endif %} {% endwith %}</div>
+                </div>
+                <!--Desarrollo-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="desarrollo" class="control-label">Desarrollo:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <textarea class="form-control" id="desarrollo" placeholder="describa como fue su desarrollo de proyecto" name="desarrollo" maxlength="1000" required=""></textarea>
+                  </div>
+                </div>
+                <!--desarrollo foto 1-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="desarrollofoto1" class="control-label">Foto 1 .png:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <input type="file" name="desarrollofoto1" id="desarrollofoto1" required="">{% with mensajesDeError = get_flashed_messages(category_filter=["CategoriaError"])
+                    %} {% if mensajesDeError %} {% for mensaje in mensajesDeError %}
+                    <div class="alert alert-danger alert-dismissable">{{ mensaje }}</div>{% endfor %} {% endif %} {% endwith %}</div>
+                </div>
+                <!--desarrollo foto 2-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="desarrollofoto2" class="control-label">Foto 2 .png:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <input type="file" name="desarrollofoto2" id="desarrollofoto2" required="">{% with mensajesDeError = get_flashed_messages(category_filter=["CategoriaError"])
+                    %} {% if mensajesDeError %} {% for mensaje in mensajesDeError %}
+                    <div class="alert alert-danger alert-dismissable">{{ mensaje }}</div>{% endfor %} {% endif %} {% endwith %}</div>
+                </div>
+                <!--Resultados-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="resultados" class="control-label">Resultados:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <textarea class="form-control" id="resultados" placeholder="describa los resulados obtenidos" name="resultados" maxlength="1000" required=""></textarea>
+                  </div>
+                </div>
+                <!--resultados foto 1--->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="resultadosfoto1" class="control-label">Foto 1 .png:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <input type="file" name="resultadosfoto1" id="resultadosfoto1" required="">{% with mensajesDeError = get_flashed_messages(category_filter=["CategoriaError"])
+                    %} {% if mensajesDeError %} {% for mensaje in mensajesDeError %}
+                    <div class="alert alert-danger alert-dismissable">{{ mensaje }}</div>{% endfor %} {% endif %} {% endwith %}</div>
+                </div>
+                <!--resultados foto 2-->
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <label for="resultadosfoto2" class="control-label">Foto 2 .png:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <input type="file" name="resultadosfoto2" id="resultadosfoto2" required="">{% with mensajesDeError = get_flashed_messages(category_filter=["CategoriaError"])
+                    %} {% if mensajesDeError %} {% for mensaje in mensajesDeError %}
+                    <div class="alert alert-danger alert-dismissable">{{ mensaje }}</div>{% endfor %} {% endif %} {% endwith %}</div>
+                </div>
+                <label></label>
+                <label></label>
+                <!--BOTON GURADAR Y ENVIAR-->
+                <div class="form-group">
+                  <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-primary">Guardar y Enviar</button>
+                  </div>
+                </div>
+                <!--FIN DE BOTON GUARDAR Y ENVIAR-->
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+
+</body></html>
+<!--funcion-->
+<script>
+function func_aread(select_Element)
+{
+    var elemID = document.getElementById(select_Element);
+    if(elemID.options[elemID.selectedIndex].value == 'otro')
+    {
+        document.getElementById('areadesarrollo').style.display = "block";
+        document.getElementById('areadesarrollo').style.required = true;
+        document.getElementById('carrera').required = "false";
+    }else{
+        document.getElementById('carrera').required = "true";
+        document.getElementById('areadesarrollo').style.display = "none";
+        document.getElementById('areadesarrollo').style.required = false;
+    }
+}
+</script>
